@@ -16,7 +16,7 @@ private:
 public:
 	JSONReader();
 	std::string getValueFromJSON(std::string &line);
-	std::ifstream getJsonFile(std::string fileName);
+	std::ifstream getJsonFile(std::filesystem::path path);
 };
 
 #endif

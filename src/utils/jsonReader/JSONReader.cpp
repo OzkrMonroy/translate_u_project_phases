@@ -9,9 +9,9 @@ JSONReader::JSONReader()
 	src_path = "src";
 }
 
-ifstream JSONReader::getJsonFile(string fileName)
+ifstream JSONReader::getJsonFile(fs::path path)
 {
-	string jsonFile = (path_to_main / src_path / fileName).string();
+	string jsonFile = (path_to_main / src_path / path).string();
 	ifstream filePath(jsonFile);
 
 	return filePath;
