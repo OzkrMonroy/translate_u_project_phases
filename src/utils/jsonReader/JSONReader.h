@@ -1,4 +1,4 @@
-#ifndef JSONREADER_H
+#if !defined(JSONREADER_H)
 #define JSONREADER_H
 
 #include <iostream>

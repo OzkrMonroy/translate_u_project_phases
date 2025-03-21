@@ -1,0 +1,18 @@
+{
+	"translates": [
+		{
+			"es": "casa",
+			"it": "casa",
+			"fr": "maison",
+			"de": "haus",
+			"en": "house"
+		},
+		{
+			"es": "perro",
+			"it": "cane",
+			"fr": "chien",
+			"de": "hund",
+			"en": "dog"
+		}
+	]
+}
