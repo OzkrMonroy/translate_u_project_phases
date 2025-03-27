@@ -2,44 +2,75 @@
 
 using namespace std;
 
-TranslateManager::TranslateManager()
+TranslateManager::TranslateManager() : dictionary(), reader() {}
+
+void TranslateManager::loadWordsFromJSONFile()
 {
-	TranslateManager::wordCollection = nullptr;
-}
+	ifstream filePath = reader.getJsonFile("data/translates.json");
 
-void TranslateManager::addWordToCollection(WordTranslations *wordTranslations)
-{
-	if (!wordTranslations)
-		return;
-
-	TranslateManager::WordCollectionRef newWordCollection = new TranslateManager::WordCollection;
-	newWordCollection->wordTranslations = wordTranslations;
-	newWordCollection->nextSpaceInCollection = TranslateManager::wordCollection;
-	TranslateManager::wordCollection = newWordCollection;
-}
-
-void TranslateManager::displayWordsInCollection()
-{
-	TranslateManager::WordCollectionRef collection = TranslateManager::wordCollection;
-
-	if (!collection)
+	if (!filePath)
 	{
-		cout << "El traductor no tiene ninguna palabra \n"
+		cout << "Error al abrir el archivo JSON \n"
 				 << endl;
 		return;
 	}
 
-	while (collection)
+	string currentLine;
+	WordTranslations word;
+
+	while (getline(filePath, currentLine))
 	{
-		if (collection->wordTranslations)
+		if (currentLine.find("\"es\"") != string::npos)
 		{
-			cout << "Traducción de " << collection->wordTranslations->spanish << " es: \n";
-			cout << "Inglés: " << collection->wordTranslations->english << endl;
-			cout << "Italiano: " << collection->wordTranslations->italian << endl;
-			cout << "Francés: " << collection->wordTranslations->french << endl;
-			cout << "Alemán: " << collection->wordTranslations->german << endl;
+			word.spanish = reader.getValueFromJSON(currentLine);
 		}
-		collection = collection->nextSpaceInCollection;
-		cout << "\n";
+		else if (currentLine.find("\"it\"") != string::npos)
+		{
+			word.italian = reader.getValueFromJSON(currentLine);
+		}
+		else if (currentLine.find("\"fr\"") != string::npos)
+		{
+			word.french = reader.getValueFromJSON(currentLine);
+		}
+		else if (currentLine.find("\"de\"") != string::npos)
+		{
+			word.german = reader.getValueFromJSON(currentLine);
+		}
+		else if (currentLine.find("\"en\"") != string::npos)
+		{
+			word.english = reader.getValueFromJSON(currentLine);
+		}
+		else if (currentLine.find("}") != string::npos)
+		{
+			if (word.spanish.empty() || word.english.empty() ||
+					word.italian.empty() || word.french.empty() || word.german.empty())
+			{
+				cout << "Advertencia: Se omitió una palabra por campos incompletos." << endl;
+			}
+			else
+			{
+				dictionary.insert(word);
+			}
+
+			word = WordTranslations();
+		}
 	}
+
+	filePath.close();
+}
+
+void TranslateManager::displayWordsInDictionary()
+{
+	cout << "\nPalabras en el Diccionario:\n";
+	dictionary.inOrderTraversal();
+}
+
+void TranslateManager::addWord(const WordTranslations &word)
+{
+	dictionary.insert(word);
+}
+
+void TranslateManager::removeWord(const string &spanish)
+{
+	dictionary.remove(spanish);
 }
