@@ -3,6 +3,7 @@
 
 using namespace std;
 
+// Public methods
 DictionaryAVLTree::DictionaryAVLTree() : root(nullptr) {}
 
 DictionaryAVLTree::~DictionaryAVLTree()
@@ -19,6 +20,13 @@ void DictionaryAVLTree::remove(const string &word)
 {
 	root = removeNode(root, word);
 }
+
+void DictionaryAVLTree::inOrderTraversal() const
+{
+	inOrderTraversal(root);
+}
+
+// Private methods
 
 AVLNode *DictionaryAVLTree::insert(AVLNode *node, const WordTranslations &word)
 {
@@ -101,6 +109,37 @@ AVLNode *DictionaryAVLTree::removeNode(AVLNode *node, const string &word)
 			node->right = removeNode(node->right, temp->word.spanish);
 		}
 	}
+
+	if (!node)
+		return nullptr;
+
+	node->height = 1 + max(getHeight(node->left), getHeight(node->right));
+	int balance = getBalanceFactor(node);
+
+	// balance left-left
+	if (balance > 1 && getBalanceFactor(node->left) >= 0)
+	{
+		return rotateRight(node);
+	}
+	// balance left-right
+	if (balance > 1 && getBalanceFactor(node->left) < 0)
+	{
+		node->left = rotateLeft(node->left);
+		return rotateRight(node);
+	}
+	// balance right-right
+	if (balance < -1 && getBalanceFactor(node->right) <= 0)
+	{
+		return rotateLeft(node);
+	}
+	// balance right-left
+	if (balance < -1 && getBalanceFactor(node->right) > 0)
+	{
+		node->right = rotateRight(node->right);
+		return rotateLeft(node);
+	}
+
+	return node;
 }
 
 AVLNode *DictionaryAVLTree::findMinNode(AVLNode *node)
@@ -148,23 +187,19 @@ AVLNode *DictionaryAVLTree::rotateLeft(AVLNode *unbalancedNode)
 	return newRoot;
 }
 
-void DictionaryAVLTree::inOrderTraversal() const
-{
-	inOrderTraversal(root);
-}
-
 void DictionaryAVLTree::inOrderTraversal(AVLNode *node) const
 {
 	if (!node)
 		return;
 
 	inOrderTraversal(node->left);
+	cout << "\n";
 	cout << "Español: " << node->word.spanish << " | ";
 	cout << "Inglés: " << node->word.english << " | ";
 	cout << "Italiano: " << node->word.italian << " | ";
 	cout << "Francés: " << node->word.french << " | ";
 	cout << "Alemán: " << node->word.german << " | " << endl;
-
+	cout << "\n";
 	inOrderTraversal(node->right);
 }
 

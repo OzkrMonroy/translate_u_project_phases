@@ -13,6 +13,20 @@
 			"fr": "chien",
 			"de": "hund",
 			"en": "dog"
+		},
+		{
+			"es": "adiós",
+			"it": "addio",
+			"fr": "merci",
+			"de": "danke",
+			"en": "goodbye"
+		},
+		{
+			"es": "hola",
+			"it": "ciao",
+			"fr": "bonjour",
+			"de": "hallo",
+			"en": "hello"
 		}
 	]
 }
