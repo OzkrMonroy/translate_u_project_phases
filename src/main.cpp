@@ -2,11 +2,13 @@
 #include "./utils/jsonReader/JSONReader.h"
 #include "./translateManager/TranslateManager.h"
 #include "./structs/WordTranslations.h"
+#include "./dictionaryAVLTree/DictionaryAVLTree.h"
 
 using namespace std;
 typedef WordTranslations *WordTranslationsRef;
 
 TranslateManager manager = TranslateManager();
+DictionaryAVLTree dictionary;
 
 void loadWordsFromJSONFile(TranslateManager::WordCollectionRef &collectionRef)
 {
@@ -20,7 +22,7 @@ void loadWordsFromJSONFile(TranslateManager::WordCollectionRef &collectionRef)
 		return;
 	}
 
-	string currentLine;
+	string currentLine, spanish, english, italian, french, german;
 	WordTranslationsRef currentWord = nullptr;
 
 	while (getline(filePath, currentLine))
@@ -31,28 +33,29 @@ void loadWordsFromJSONFile(TranslateManager::WordCollectionRef &collectionRef)
 		}
 		else if (currentLine.find("\"es\"") != string::npos)
 		{
-			currentWord->spanish = reader.getValueFromJSON(currentLine);
+			spanish = reader.getValueFromJSON(currentLine);
 		}
 		else if (currentLine.find("\"it\"") != string::npos)
 		{
-			currentWord->italian = reader.getValueFromJSON(currentLine);
+			italian = reader.getValueFromJSON(currentLine);
 		}
 		else if (currentLine.find("\"fr\"") != string::npos)
 		{
-			currentWord->french = reader.getValueFromJSON(currentLine);
+			french = reader.getValueFromJSON(currentLine);
 		}
 		else if (currentLine.find("\"de\"") != string::npos)
 		{
-			currentWord->german = reader.getValueFromJSON(currentLine);
+			german = reader.getValueFromJSON(currentLine);
 		}
 		else if (currentLine.find("\"en\"") != string::npos)
 		{
-			currentWord->english = reader.getValueFromJSON(currentLine);
+			english = reader.getValueFromJSON(currentLine);
 		}
 		else if (currentLine.find("}") != string::npos)
 		{
-			manager.addWordToCollection(currentWord);
-			currentWord = nullptr;
+			dictionary.insert({spanish, italian, french, german, english});
+			// manager.addWordToCollection(currentWord);
+			// currentWord = nullptr;
 		}
 	}
 
@@ -64,6 +67,7 @@ int main()
 	TranslateManager::WordCollectionRef wordCollection = nullptr;
 	loadWordsFromJSONFile(wordCollection);
 
-	manager.displayWordsInCollection();
+	// manager.displayWordsInCollection();
+	dictionary.inOrderTraversal();
 	return 0;
 }
