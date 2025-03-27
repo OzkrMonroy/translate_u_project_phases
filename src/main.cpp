@@ -1,12 +1,11 @@
 #include <iostream>
-#include "./translateManager/TranslateManager.h"
+#include "./dictionaryMenu/DictionaryMenu.h"
 
 using namespace std;
 
 int main()
 {
-	TranslateManager manager;
-	manager.loadWordsFromJSONFile();
-	manager.displayWordsInDictionary();
+	DictionaryMenu menu;
+	menu.run();
 	return 0;
 }

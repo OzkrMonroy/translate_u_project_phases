@@ -64,3 +64,13 @@ void TranslateManager::displayWordsInDictionary()
 	cout << "\nPalabras en el Diccionario:\n";
 	dictionary.inOrderTraversal();
 }
+
+void TranslateManager::addWord(const WordTranslations &word)
+{
+	dictionary.insert(word);
+}
+
+void TranslateManager::removeWord(const string &spanish)
+{
+	dictionary.remove(spanish);
+}

@@ -16,6 +16,8 @@ public:
 	TranslateManager();
 	void loadWordsFromJSONFile();
 	void displayWordsInDictionary();
+	void addWord(const WordTranslations &word);
+	void removeWord(const std::string &spanish);
 };
 
 #endif // TRANSLATEMANAGER
