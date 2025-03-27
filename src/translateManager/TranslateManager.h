@@ -2,25 +2,20 @@
 #define TRANSLATEMANAGER_H
 
 #include <iostream>
-#include "../structs/WordTranslations.h"
+#include <string>
+#include "../dictionaryAVLTree/DictionaryAVLTree.h"
+#include "../utils/jsonReader/JSONReader.h"
 
 class TranslateManager
 {
-public:
-	struct WordCollection
-	{
-		WordTranslations *wordTranslations;
-		WordCollection *nextSpaceInCollection;
-	};
-	typedef WordCollection *WordCollectionRef;
-
-public:
-	WordCollectionRef wordCollection;
+private:
+	DictionaryAVLTree dictionary;
+	JSONReader reader;
 
 public:
 	TranslateManager();
-	void addWordToCollection(WordTranslations *wordTranslations);
-	void displayWordsInCollection();
+	void loadWordsFromJSONFile();
+	void displayWordsInDictionary();
 };
 
 #endif // TRANSLATEMANAGER
