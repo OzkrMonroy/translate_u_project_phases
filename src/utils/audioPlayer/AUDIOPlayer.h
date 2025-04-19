@@ -7,13 +7,17 @@
 #ifdef _WIN32
 #include <sapi.h>
 #include <sphelper.h>
+#include <sstream>
 #endif
 
 
 class AUDIOPlayer
 {
+	private: 
+	void winSpeak(std::string &text, int & languageOption);
+	void macSpeak(std::string &text);
 
-public:
+	public:
 	AUDIOPlayer();
 	 void speak(std::string &text, int & languageOption);
 
