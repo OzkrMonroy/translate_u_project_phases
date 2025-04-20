@@ -26,6 +26,10 @@ void DictionaryAVLTree::inOrderTraversal() const
 	inOrderTraversal(root);
 }
 
+AVLNode *DictionaryAVLTree::getRoot() const
+{
+	return root;
+}
 // Private methods
 
 AVLNode *DictionaryAVLTree::insert(AVLNode *node, const WordTranslations &word)

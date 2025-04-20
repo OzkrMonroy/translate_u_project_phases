@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <fstream>
 #include "../../structs/WordTranslations.h"
+#include "../../structs/AVLNode.h"
 
 class TranslationFileHandler
 {
@@ -20,6 +21,7 @@ public:
 	std::ifstream getFile(std::filesystem::path path);
 	void addTranslationEntry(const WordTranslations &translation, const std::filesystem::path &file_path);
 	void ensureFileExistsWithBaseStructure(const std::filesystem::path &file_path);
+	void writeAllFromTree(AVLNode *root, const std::filesystem::path &file_path);
 };
 
 #endif
