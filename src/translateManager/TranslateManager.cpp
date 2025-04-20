@@ -2,11 +2,11 @@
 
 using namespace std;
 
-TranslateManager::TranslateManager() : dictionary(), reader() {}
+TranslateManager::TranslateManager() : dictionary(), fileHandler() {}
 
 void TranslateManager::loadWordsFromJSONFile()
 {
-	ifstream filePath = reader.getJsonFile("data/translates.json");
+	ifstream filePath = fileHandler.getFile("data/translates.json");
 
 	if (!filePath)
 	{
@@ -22,23 +22,23 @@ void TranslateManager::loadWordsFromJSONFile()
 	{
 		if (currentLine.find("\"es\"") != string::npos)
 		{
-			word.spanish = reader.getValueFromJSON(currentLine);
+			word.spanish = fileHandler.getValueFromFile(currentLine);
 		}
 		else if (currentLine.find("\"it\"") != string::npos)
 		{
-			word.italian = reader.getValueFromJSON(currentLine);
+			word.italian = fileHandler.getValueFromFile(currentLine);
 		}
 		else if (currentLine.find("\"fr\"") != string::npos)
 		{
-			word.french = reader.getValueFromJSON(currentLine);
+			word.french = fileHandler.getValueFromFile(currentLine);
 		}
 		else if (currentLine.find("\"de\"") != string::npos)
 		{
-			word.german = reader.getValueFromJSON(currentLine);
+			word.german = fileHandler.getValueFromFile(currentLine);
 		}
 		else if (currentLine.find("\"en\"") != string::npos)
 		{
-			word.english = reader.getValueFromJSON(currentLine);
+			word.english = fileHandler.getValueFromFile(currentLine);
 		}
 		else if (currentLine.find("}") != string::npos)
 		{
