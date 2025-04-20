@@ -4,15 +4,13 @@
 #include <iostream>
 #include <string>
 #include "../dictionaryAVLTree/DictionaryAVLTree.h"
-#include "../utils/jsonReader/JSONReader.h"
-
+#include "../utils/TranslationFileHandler/TranslationFileHandler.h"
 
 class TranslateManager
 {
 private:
 	DictionaryAVLTree dictionary;
-	JSONReader reader;
-	
+	TranslationFileHandler fileHandler;
 
 public:
 	TranslateManager();

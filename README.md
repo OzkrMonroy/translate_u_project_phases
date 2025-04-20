@@ -133,6 +133,55 @@ Esto permite depurar el programa en **Windows**, **macOS** y **Linux**.
 }
 ```
 
+## ⚙️ Configuración de c_pp_properties.json
+
+Asegurate de que tu archivo .vscode/c_cpp_properties.json incluya el estándar c++17 o superior y esté configurado para encontrar correctamente las rutas de los encabezados estándar del compilador.
+
+```json
+{
+  "configurations": [
+    {
+      "name": "Mac",
+      "includePath": [
+        "${workspaceFolder}/**"
+      ],
+      "defines": [],
+      "macFrameworkPath": [
+        "/System/Library/Frameworks",
+        "/Library/Frameworks"
+      ],
+      "compilerPath": "/usr/bin/clang++",
+      "cStandard": "c11",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "macos-clang-x64"
+    },
+    {
+      "name": "Linux",
+      "includePath": [
+        "${workspaceFolder}/**"
+      ],
+      "defines": [],
+      "compilerPath": "/usr/bin/g++",
+      "cStandard": "c11",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "linux-gcc-x64"
+    },
+    {
+      "name": "Windows",
+      "includePath": [
+        "${workspaceFolder}/**"
+      ],
+      "defines": [],
+      "compilerPath": "C:/msys64/ucrt64/bin/g++.exe",
+      "cStandard": "c11",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "windows-gcc-x64"
+    }
+  ],
+  "version": 4
+}
+```
+
 ## ▶️ Cómo Ejecutar el Proyecto
 
 1. **Compilar**: Ejecuta `Ctrl + Shift + B` o selecciona la tarea **Compilar C++**.
