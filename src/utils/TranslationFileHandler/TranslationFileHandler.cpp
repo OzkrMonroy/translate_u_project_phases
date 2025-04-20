@@ -49,7 +49,6 @@ void TranslationFileHandler::addTranslationEntry(const WordTranslations &transla
 {
 	string fullPath = (path_to_main / src_path / file_path).string();
 
-	// Leer archivo completo (si existe)
 	ifstream inFile(fullPath);
 	string content;
 	if (inFile.is_open())
@@ -58,13 +57,11 @@ void TranslationFileHandler::addTranslationEntry(const WordTranslations &transla
 		inFile.close();
 	}
 
-	// Si no tiene contenido, crear estructura base
 	if (content.empty())
 	{
 		content = "{\n\t\"translates\": [\n\t]\n}";
 	}
 
-	// Buscar cierre del array
 	size_t pos = content.rfind("]");
 	if (pos == string::npos)
 	{
@@ -72,7 +69,6 @@ void TranslationFileHandler::addTranslationEntry(const WordTranslations &transla
 		return;
 	}
 
-	// Buscar si ya hay al menos un objeto dentro del array
 	size_t arrayStart = content.find("[");
 	bool hasEntries = false;
 
@@ -82,7 +78,6 @@ void TranslationFileHandler::addTranslationEntry(const WordTranslations &transla
 		hasEntries = arrayContent.find("{") != string::npos;
 	}
 
-	// Crear nuevo bloque de traducción
 	string newEntry = hasEntries ? ",\n\t\t{" : "\n\t\t{";
 	newEntry += "\n\t\t\t\"es\": \"" + translation.spanish + "\",";
 	newEntry += "\n\t\t\t\"it\": \"" + translation.italian + "\",";
@@ -91,10 +86,8 @@ void TranslationFileHandler::addTranslationEntry(const WordTranslations &transla
 	newEntry += "\n\t\t\t\"en\": \"" + translation.english + "\"";
 	newEntry += "\n\t\t}";
 
-	// Insertar en el contenido antes del cierre del array
 	content.insert(pos, newEntry);
 
-	// Escribir de nuevo el archivo
 	ofstream outFile(fullPath);
 	if (!outFile.is_open())
 	{
