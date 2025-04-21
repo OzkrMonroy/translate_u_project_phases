@@ -12,6 +12,7 @@ public:
 	void insert(const WordTranslations &word);
 	void remove(const std::string &word);
 	void inOrderTraversal() const;
+	AVLNode *getRoot() const;
 
 private:
 	AVLNode *root;

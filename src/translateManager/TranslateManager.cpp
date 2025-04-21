@@ -17,9 +17,22 @@ void TranslateManager::loadWordsFromJSONFile()
 
 	string currentLine;
 	WordTranslations word;
+	bool insideArray = false;
 
 	while (getline(filePath, currentLine))
 	{
+		if (currentLine.find_first_not_of(" \t\r\n") == string::npos)
+			continue;
+
+		if (currentLine.find("\"translates\"") != string::npos)
+		{
+			insideArray = true;
+			continue;
+		}
+
+		if (!insideArray)
+			continue;
+
 		if (currentLine.find("\"es\"") != string::npos)
 		{
 			word.spanish = fileHandler.getValueFromFile(currentLine);
@@ -45,7 +58,8 @@ void TranslateManager::loadWordsFromJSONFile()
 			if (word.spanish.empty() || word.english.empty() ||
 					word.italian.empty() || word.french.empty() || word.german.empty())
 			{
-				cout << "Advertencia: Se omitió una palabra por campos incompletos." << endl;
+				cout << "⚠️ Advertencia: Se omitió una palabra por campos incompletos:\n";
+				cout << " → es: " << word.spanish << ", en: " << word.english << "\n";
 			}
 			else
 			{
@@ -68,9 +82,11 @@ void TranslateManager::displayWordsInDictionary()
 void TranslateManager::addWord(const WordTranslations &word)
 {
 	dictionary.insert(word);
+	fileHandler.addTranslationEntry(word, "data/translates.json");
 }
 
 void TranslateManager::removeWord(const string &spanish)
 {
 	dictionary.remove(spanish);
+	fileHandler.writeAllFromTree(dictionary.getRoot(), "data/translates.json");
 }

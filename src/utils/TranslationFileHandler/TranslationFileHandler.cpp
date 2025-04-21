@@ -12,6 +12,7 @@ TranslationFileHandler::TranslationFileHandler()
 ifstream TranslationFileHandler::getFile(fs::path path)
 {
 	string jsonFile = (path_to_main / src_path / path).string();
+	ensureFileExistsWithBaseStructure(path);
 	ifstream filePath(jsonFile);
 
 	return filePath;
@@ -115,4 +116,52 @@ void TranslationFileHandler::ensureFileExistsWithBaseStructure(const fs::path &f
 		outFile << "{\n\t\"translates\": [\n\t]\n}";
 		outFile.close();
 	}
+}
+
+void TranslationFileHandler::writeAllFromTree(AVLNode *root, const fs::path &file_path)
+{
+	std::string fullPath = (path_to_main / src_path / file_path).string();
+	fs::create_directories(fs::path(fullPath).parent_path());
+
+	std::ofstream outFile(fullPath);
+	if (!outFile.is_open())
+	{
+		std::cerr << "No se pudo abrir el archivo para escritura.\n";
+		return;
+	}
+
+	outFile << "{\n\t\"translates\": [";
+
+	bool first = true;
+	std::function<void(AVLNode *)> writeInOrder = [&](AVLNode *node)
+	{
+		if (!node)
+			return;
+
+		writeInOrder(node->left);
+
+		if (!first)
+		{
+			outFile << ",";
+		}
+		else
+		{
+			first = false;
+		}
+
+		outFile << "\n\t\t{";
+		outFile << "\n\t\t\t\"es\": \"" << node->word.spanish << "\",";
+		outFile << "\n\t\t\t\"it\": \"" << node->word.italian << "\",";
+		outFile << "\n\t\t\t\"fr\": \"" << node->word.french << "\",";
+		outFile << "\n\t\t\t\"de\": \"" << node->word.german << "\",";
+		outFile << "\n\t\t\t\"en\": \"" << node->word.english << "\"";
+		outFile << "\n\t\t}";
+
+		writeInOrder(node->right);
+	};
+
+	writeInOrder(root);
+
+	outFile << "\n\t]\n}";
+	outFile.close();
 }
