@@ -1,4 +1,5 @@
 #include "TranslationFileHandler.h"
+#include <functional>
 
 using namespace std;
 namespace fs = filesystem;
