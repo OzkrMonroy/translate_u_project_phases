@@ -1,2 +1,26 @@
 .vscode
 bin
+# Visual Studio files
+.vs/
+*.vcxproj*
+*.sln
+
+# CMake build
+build/
+out/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Temp files
+*.obj
+*.o
+*.exe
+*.log
+*.user
+*.pch
+
+# System files
+.DS_Store
+Thumbs.db
