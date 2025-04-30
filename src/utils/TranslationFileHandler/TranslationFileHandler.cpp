@@ -6,12 +6,11 @@ namespace fs = filesystem;
 TranslationFileHandler::TranslationFileHandler()
 {
 	path_to_main = std::filesystem::current_path();
-	src_path = "src";
 }
 
 ifstream TranslationFileHandler::getFile(fs::path path)
 {
-	string jsonFile = (path_to_main / src_path / path).string();
+	string jsonFile = (path_to_main / path).string();
 	ensureFileExistsWithBaseStructure(path);
 	ifstream filePath(jsonFile);
 
