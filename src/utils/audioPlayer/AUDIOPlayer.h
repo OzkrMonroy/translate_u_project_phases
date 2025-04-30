@@ -4,23 +4,22 @@
 #include <iostream>
 #include <string>
 
-#ifdef _WIN32
+#ifdef PLATFORM_WINDOWS
+#include <windows.h>
 #include <sapi.h>
 #include <sphelper.h>
 #include <sstream>
 #endif
 
-
 class AUDIOPlayer
 {
-	private: 
-	void winSpeak(std::string &text, int & languageOption);
+private:
+	void winSpeak(std::string &text, int &languageOption);
 	void macSpeak(std::string &text);
 
-	public:
+public:
 	AUDIOPlayer();
-	 void speak(std::string &text, int & languageOption);
-
+	void speak(std::string &text, int &languageOption);
 };
 
 #endif

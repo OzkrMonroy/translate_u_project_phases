@@ -1,6 +1,6 @@
 #include "AUDIOPlayer.h"
 using namespace std;
-#ifdef _WIN32
+#ifdef PLATFORM_WINDOWS
 
 enum Lenguage : int {
     ES = 0x0C0A,
@@ -25,10 +25,10 @@ AUDIOPlayer::AUDIOPlayer()
 
 void AUDIOPlayer::speak(std::string & text, int & languageOption)
 {
-    #ifdef _WIN32
+    #ifdef PLATFORM_WINDOWS
     winSpeak(text, languageOption);
 
-    #elif _APPLE_
+    #elif PLATFORM_MACOS
     macSpeak(text);
     #endif
 }
