@@ -1,5 +1,4 @@
 #include "TranslationFileHandler.h"
-#include <functional>
 
 using namespace std;
 namespace fs = filesystem;
@@ -134,12 +133,12 @@ void TranslationFileHandler::writeAllFromTree(AVLNode *root, const fs::path &fil
 	outFile << "{\n\t\"translates\": [";
 
 	bool first = true;
-	std::function<void(AVLNode *)> writeInOrder = [&](AVLNode *node)
+	auto writeInOrder = [&](auto &&self, AVLNode *node)
 	{
 		if (!node)
 			return;
 
-		writeInOrder(node->left);
+		self(self, node->left);
 
 		if (!first)
 		{
@@ -158,10 +157,10 @@ void TranslationFileHandler::writeAllFromTree(AVLNode *root, const fs::path &fil
 		outFile << "\n\t\t\t\"en\": \"" << node->word.english << "\"";
 		outFile << "\n\t\t}";
 
-		writeInOrder(node->right);
+		self(self, node->right);
 	};
 
-	writeInOrder(root);
+	writeInOrder(writeInOrder, root);
 
 	outFile << "\n\t]\n}";
 	outFile.close();

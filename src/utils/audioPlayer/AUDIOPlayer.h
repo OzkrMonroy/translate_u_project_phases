@@ -5,6 +5,7 @@
 #include <string>
 
 #ifdef _WIN32
+#include <windows.h>
 #include <sapi.h>
 #include <sphelper.h>
 #include <sstream>

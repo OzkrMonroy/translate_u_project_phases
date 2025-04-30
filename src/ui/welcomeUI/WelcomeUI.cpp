@@ -7,6 +7,8 @@ WelcomeUI::WelcomeUI()
 
 void WelcomeUI::run()
 {
+	displayWelcomeOptions();
+	handleUserChoise();
 }
 
 void WelcomeUI::displayWelcomeOptions() const
@@ -59,11 +61,33 @@ void WelcomeUI::login()
 }
 
 void WelcomeUI::registerUser()
-{
+{ 
+	string newUserName;
+	string newUserPasword;
+
+	cout << "Ingrese nombre de usuario\n";
+    getline(cin,newUserName);
+
+	cout << "Ingrese su contraseña\n";
+	getline(cin,newUserPasword);
+
+
+	cout <<"Su usuario fue creado...\n";
+
+
 }
 
 void WelcomeUI::translator()
 {
+	string text; 
+    int languageOption;
+
+    cout << "Ingrese texto a traducir\n";
+    getline(cin, text);
+
+    cout << "Ingrese idioma al que quiere traducir\n";
+    cin>>languageOption;
+
 }
 
 
